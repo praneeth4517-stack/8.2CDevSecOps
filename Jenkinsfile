@@ -18,6 +18,12 @@ pipeline {
         stage('Run Tests') {
             steps {
                 bat 'npm test || exit /b 0'
+                emailext (
+                    subject: "Run Tests stage completed - Build #${env.BUILD_NUMBER}",
+                    body: "The Run Tests stage has completed for build #${env.BUILD_NUMBER}. See attached log for details.",
+                    to: 'praneeth4517@gmail.com',
+                    attachLog: true
+                )
             }
         }
 
@@ -30,6 +36,12 @@ pipeline {
         stage('NPM Audit (Security Scan)') {
             steps {
                 bat 'npm audit || exit /b 0'
+                emailext (
+                    subject: "Security Scan stage completed - Build #${env.BUILD_NUMBER}",
+                    body: "The NPM Audit (Security Scan) stage has completed for build #${env.BUILD_NUMBER}. See attached log for details.",
+                    to: 'praneeth4517@gmail.com',
+                    attachLog: true
+                )
             }
         }
 
